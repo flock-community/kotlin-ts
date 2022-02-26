@@ -1,0 +1,6 @@
+tsbuildinfo/
+node_modules/
+.npmrc
+.DS_Store
+compiler/
+dist/
