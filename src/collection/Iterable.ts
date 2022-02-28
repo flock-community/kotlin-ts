@@ -1,6 +1,5 @@
 // From: https://github.com/JetBrains/kotlin/blob/master/libraries/stdlib/common/src/generated/_Collections.kt
 import "../global";
-import { IndexOutOfBoundsException, NoSuchElementException } from "../Exceptions";
 
 /**
  * @tsplus type IterableOps
@@ -11,37 +10,30 @@ export const Iterable: IterableOps = {};
 /**
  * @tsplus static IterableOps __call
  */
-export function createIterable<T>(iteratorFactory: () => Iterator<T>): Iterable<T> {
-  return { [Symbol.iterator]: iteratorFactory };
-}
+export const createIterable = <T>(iteratorFactory: () => Iterator<T>): Iterable<T> => ({
+  [Symbol.iterator]: iteratorFactory,
+});
 
 /**
  * @tsplus static IterableOps naturals
  */
-export function naturals(): Iterable<number> {
-  return Iterable(() => {
+export const naturals = (): Iterable<number> =>
+  Iterable(() => {
     let n = 0;
-    return {
-      next: () => ({ value: n++, done: false }),
-    };
+    return { next: () => ({ value: n++, done: false }) };
   });
-}
 
 /**
  * Returns an iterator over the elements of this object.
  * @tsplus fluent Iterable toArray
  */
-export function toArray<T>(self: Iterable<T>) {
-  return [...self];
-}
+export const toArray = <T>(self: Iterable<T>) => [...self];
 
 /**
  * Returns an iterator over the elements of this object.
  * @tsplus fluent Iterable iterator
  */
-export function iterator<T>(self: Iterable<T>) {
-  return self[Symbol.iterator]();
-}
+export const iterator = <T>(self: Iterable<T>) => self[Symbol.iterator]();
 
 /**
  * Returns `true` if [element] is found in the collection.
@@ -49,41 +41,22 @@ export function iterator<T>(self: Iterable<T>) {
  * @tsplus fluent Iterable contains
  * @tsplus fluent Array contains
  */
-export function contains<T>(self: Iterable<T>, element: T): boolean {
-  return self.indexOf(element) !== -1;
-}
+export const contains = <T>(self: Iterable<T>, element: T): boolean => self.indexOf(element) !== -1;
 
 /**
- * Returns an element at the given [index] or throws an [IndexOutOfBoundsException] if the [index] is out of bounds of this collection.
+ * Returns an element at the given [index] or undefined if the [index] is out of bounds of this collection.
  *
  * @tsplus fluent Iterable elementAt
  */
-export function elementAt<T>(self: Iterable<T>, index: number) {
-  return self.elementAtOrElse(index, () => {
-    throw new IndexOutOfBoundsException("Collection doesn't contain element at index $index.");
-  });
-}
+export const elementAt = <T>(self: Iterable<T>, index: number): T | undefined =>
+  self.zip(naturals()).find(([, i]) => i === index)?.[0];
 
 /**
- * Returns an element at the given [index] or the result of calling the [defaultValue] function if the [index] is out of bounds of this collection.
- *
- * @tsplus fluent Iterable elementAtOrElse
+ * Returns the first element matching the given [predicate], or `undefined` if element was not found.
+ * @tsplus fluent Iterable find
  */
-export function elementOrElse<T>(self: Iterable<T>, index: number, defaultValue: (index: number) => T): T {
-  if (index < 0) return defaultValue(index);
-  let count = 0;
-  for (const element of self) if (index === count++) return element;
-  return defaultValue(index);
-}
-
-/**
- * Returns a lazy [Iterable] that wraps each element of the original collection
- * into a tuple [T, number] containing the index of that element and the element itself.
- *
- * @tsplus fluent Iterable withIndex
- */
-export function withIndex<T>(self: Iterable<T>): Iterable<[T, number]> {
-  return Iterable(() => self.iterator().withIndex());
+export function find<T>(self: Iterable<T>, predicate: (t: T) => boolean): T | undefined {
+  for (const it of self) if (predicate(it)) return it;
 }
 
 /**
@@ -91,29 +64,28 @@ export function withIndex<T>(self: Iterable<T>): Iterable<[T, number]> {
  *
  * @tsplus fluent Iterable indexOf
  */
-export function indexOf<T>(self: Iterable<T>, element: T): number {
-  let index = 0;
-  for (const item of self) {
-    if (element === item) return index;
-    index += 1;
-  }
-  return -1;
-}
+export const indexOf = <T>(self: Iterable<T>, element: T): number =>
+  self.zip(naturals()).find(([it]) => it === element)?.[1] ?? -1;
 
 /**
  * Returns first element.
- * @throws {NoSuchElementException} if the collection is empty.
  * @tsplus fluent Iterable first
  */
-export function first<T>(self: Iterable<T>) {
+export function first<T>(self: Iterable<T>): T | undefined {
   const next = self.iterator().next();
   if (!next.done) return next.value;
-  throw new NoSuchElementException();
 }
 
 /**
- * @tsplus operator Iterable +
+ * Returns index of the first element matching the given [predicate], or -1 if the collection does not contain such element.
+ * @tsplus fluent Iterable indexOf
+ */
+export const indexOf_ = <T>(self: Iterable<T>, predicate: (t: T) => boolean): number =>
+  self.zip(naturals()).find(([it]) => predicate(it))?.[1] ?? -1;
+
+/**
  * @tsplus fluent Iterable zip
+ * @tsplus operator Iterable +
  */
 export function zip<T, R>(self: Iterable<T>, other: Iterable<R>): Iterable<[T, R]> {
   return Iterable(() => {
@@ -127,12 +99,10 @@ export function zip<T, R>(self: Iterable<T>, other: Iterable<R>): Iterable<[T, R
   });
 }
 
-// public inline fun <T, R, V> Iterable<T>.zip(other: Iterable<R>, transform: (a: T, b: R) -> V): List<V> {
-//     val first = iterator()
-//     val second = other.iterator()
-//     val list = ArrayList<V>(minOf(collectionSizeOrDefault(10), other.collectionSizeOrDefault(10)))
-//     while (first.hasNext() && second.hasNext()) {
-//         list.add(transform(first.next(), second.next()))
-//     }
-//     return list
-// }
+/**
+ * Returns a lazy [Iterable] that wraps each element of the original collection
+ * into a tuple [T, number] containing the index of that element and the element itself.
+ *
+ * @tsplus fluent Iterable withIndex
+ */
+export const withIndex = <T>(self: Iterable<T>): Iterable<[T, number]> => self.zip(naturals());
