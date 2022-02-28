@@ -87,6 +87,7 @@ export const indexOf_ = <T>(self: Iterable<T>, predicate: (t: T) => boolean): nu
  * @tsplus fluent Iterable zip
  * @tsplus operator Iterable +
  */
+// Arrow functions, because of https://github.com/ts-plus/typescript/issues/69
 export function zip<T, R>(self: Iterable<T>, other: Iterable<R>): Iterable<[T, R]> {
   return Iterable(() => {
     const iterators = [self.iterator(), other.iterator()] as const;
