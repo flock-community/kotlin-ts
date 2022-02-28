@@ -10,7 +10,6 @@
     "incremental": true,
     "tsBuildInfoFile": "dist/.tsbuildinfo",
     "skipLibCheck": true,
-//    "tsPlusModuleDiscoveryLocalSuffix": "js",
     "downlevelIteration": true,
 
     "allowUnusedLabels": false,
@@ -18,9 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-    "importsNotUsedAsValues": "error",
-//    "types": ["./src/global.ts"]
+    "noUncheckedIndexedAccess": true
   },
   "include": ["src/**/*.ts"]
 }
