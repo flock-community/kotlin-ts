@@ -1,3 +1,8 @@
+declare global {
+  /** @tsplus type Iterator */
+  export interface Iterator<T> {}
+}
+
 /**
  * Iterator transforming original `iterator` into iterator of a tuple [T, number], counting index from zero.
  * @tsplus fluent Iterator withIndex

@@ -1,5 +1,9 @@
 // From: https://github.com/JetBrains/kotlin/blob/master/libraries/stdlib/common/src/generated/_Collections.kt
-import "../global";
+
+declare global {
+  /** @tsplus type Iterable */
+  export interface Iterable<T> {}
+}
 
 /**
  * @tsplus type IterableOps
