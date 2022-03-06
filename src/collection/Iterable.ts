@@ -130,8 +130,8 @@ export const indexOf_ = <T>(self: Iterable<T>, predicate: (t: T) => boolean): nu
  * @tsplus fluent Iterable zip
  */
 export const zip = Iterable(<T, R>(self: Iterable<T>, other: Iterable<R>): Iterator<[T, R]> => {
-  const iter = self[Symbol.iterator]();
-  const otherIter = other[Symbol.iterator]();
+  const iter = self.iterator();
+  const otherIter = other.iterator();
   return {
     next(): IteratorResult<[T, R], unknown> {
       const { value, done } = iter.next();
