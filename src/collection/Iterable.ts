@@ -129,20 +129,18 @@ export const indexOf_ = <T>(self: Iterable<T>, predicate: (t: T) => boolean): nu
 /**
  * @tsplus fluent Iterable zip
  */
-export const zip: <T, R>(self: Iterable<T>, other: Iterable<R>) => Iterable<[T, R]> = Iterable(
-  <T, R>(self: Iterable<T>, other: Iterable<R>): Iterator<[T, R]> => {
-    const iter = self[Symbol.iterator]();
-    const otherIter = other[Symbol.iterator]();
-    return {
-      next(): IteratorResult<[T, R], unknown> {
-        const { value, done } = iter.next();
-        const { value: otherValue, done: otherDone } = otherIter.next();
-        if (done || otherDone) return { value: [value, otherValue], done: true };
-        return { value: [value, otherValue], done: done || otherDone };
-      },
-    };
-  }
-);
+export const zip = Iterable(<T, R>(self: Iterable<T>, other: Iterable<R>): Iterator<[T, R]> => {
+  const iter = self[Symbol.iterator]();
+  const otherIter = other[Symbol.iterator]();
+  return {
+    next(): IteratorResult<[T, R], unknown> {
+      const { value, done } = iter.next();
+      const { value: otherValue, done: otherDone } = otherIter.next();
+      if (done || otherDone) return { value: [value, otherValue], done: true };
+      return { value: [value, otherValue], done: done || otherDone };
+    },
+  };
+});
 
 /**
  * Returns a lazy [Iterable] that wraps each element of the original collection
