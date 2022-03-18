@@ -226,7 +226,7 @@ export const associateWithTo = <K, V, M extends Map<K, V>>(
 
 /**
  * Returns an average value of elements in the collection.
-
+ *
  * @tsplus fluent Iterable average
  */
 export const average = (self: Iterable<number>): number => {
