@@ -26,9 +26,9 @@
     "build:cjs": "tsc -b tsconfig.cjs.json",
     "build:esm": "tsc -b tsconfig.esm.json",
     "build:clean": "rimraf build",
+    "preinstall": "update-ruecksichtslos --caret",
     "postinstall": "tsplus-install",
-    "test": "jest --all",
-    "update": "npx --yes update-ruecksichtslos@latest --caret"
+    "test": "jest --all"
   },
   "devDependencies": {
     "@tsplus/installer": "^0.0.41",
@@ -38,7 +38,8 @@
     "prettier": "^2.6.0",
     "ts-jest": "^27.1.3",
     "ts-node": "^10.7.0",
-    "typescript": "^4.6.2"
+    "typescript": "^4.6.2",
+    "update-ruecksichtslos": "^0.0.17"
   },
   "prettier": {
     "printWidth": 120
