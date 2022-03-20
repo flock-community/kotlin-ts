@@ -1,7 +1,7 @@
 // From: https://github.com/JetBrains/kotlin/blob/master/libraries/stdlib/common/src/generated/_Collections.kt
-import { throws } from "../utils";
-import { IndexOutOfBoundsException } from "../Exceptions";
-import { Sequence } from "./Sequence";
+import { throws } from "../utils.js";
+import { IndexOutOfBoundsException } from "../Exceptions.js";
+import { Sequence } from "./Sequence.js";
 
 declare global {
   /** @tsplus type Iterable */

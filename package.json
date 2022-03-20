@@ -1,40 +1,37 @@
 {
-  "name": "@flock/ts-plus-kotlin",
-  "version": "0.0.0",
+  "name": "@flock/kotlin-ts",
+  "version": "0.0.7",
   "author": "Kasper Peulen",
   "license": "MIT",
-  "repository": "https://github.com/flock-community/ts-plus-kotlin.git",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./build/dts/*"
-      ]
+  "repository": "https://github.com/flock-community/kotlin-ts.git",
+  "main": "./index.js",
+  "module": "./esm/index.js",
+  "sideEffects": [],
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./index.js"
+    },
+    "./*": {
+      "import": "./esm/*.js",
+      "require": "./*.js"
     }
   },
-  "exports": {
-    "./*": {
-      "require": "./build/cjs/*.js",
-      "import": "./build/esm/*.js"
-    }
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
-    "build": "npm run build:clean && npm run build:esm && npm run build:cjs",
-    "build:cjs": "cp .swcrc dist && cd dist && swc ./esm -d ./cjs",
-    "build:clean": "rimraf dist",
-    "build:esm": "tsc -b tsconfig.json",
-    "changeset": "changeset",
+    "release": "npm t && npm run build && cd build && npm publish",
+    "build": "npm run build:clean && npm run build:esm && npm run build:cjs && cp package.json build/package.json && cp package.esm.json build/esm/package.json",
+    "build:cjs": "tsc -b tsconfig.cjs.json",
+    "build:esm": "tsc -b tsconfig.esm.json",
+    "build:clean": "rimraf build",
     "postinstall": "tsplus-install",
-    "release": "changeset publish",
-    "swc": "swc",
-    "test": "jest",
+    "test": "jest --all",
     "update": "npx --yes update-ruecksichtslos@latest --caret"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.4.3",
-    "@changesets/cli": "^2.21.1",
-    "@swc/cli": "^0.1.55",
-    "@swc/core": "^1.2.158",
-    "@tsplus/installer": "^0.0.36",
+    "@tsplus/installer": "^0.0.41",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.21",
     "jest": "^27.5.1",

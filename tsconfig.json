@@ -1,23 +1,21 @@
 {
   "compilerOptions": {
     "strict": true,
-    "declaration": true,
     "target": "ES2021",
     "module": "ESNext",
     "moduleResolution": "node",
-    "outDir": "dist/esm",
-    "declarationDir": "dist/dts",
+    "declaration": true,
+    "sourceMap": true,
     "incremental": true,
-    "tsBuildInfoFile": "dist/.tsbuildinfo",
     "skipLibCheck": true,
     "downlevelIteration": true,
-
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true
   },
   "include": ["src/**/*.ts"]
 }

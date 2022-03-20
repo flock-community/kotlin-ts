@@ -1,5 +1,5 @@
-import { Iterable, naturals } from "./Iterable";
-import {} from "../util/Standard";
+import { Iterable, naturals } from "./Iterable.js";
+import {} from "../util/Standard.js";
 
 describe("Iterable", () => {
   const empty = new Set<string>();

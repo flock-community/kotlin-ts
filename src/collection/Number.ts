@@ -1,4 +1,4 @@
-import { Iterable } from "./Iterable";
+import { Iterable } from "./Iterable.js";
 
 declare global {
   /**

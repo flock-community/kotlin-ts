@@ -1,6 +1,6 @@
 // From https://github.com/JetBrains/kotlin/blob/master/libraries/stdlib/src/kotlin/util/Standard.kt
-import { throws } from "../utils";
-import { NotImplementedError } from "../Exceptions";
+import { throws } from "../utils.js";
+import { NotImplementedError } from "../Exceptions.js";
 
 declare global {
   /**

@@ -1,5 +1,5 @@
-import {} from "./Standard";
-import {} from "../collection/Array";
+import {} from "./Standard.js";
+import {} from "../collection/Array.js";
 
 describe("Object", () => {
   test("let", () => {

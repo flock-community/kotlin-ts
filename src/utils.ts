@@ -1,4 +1,4 @@
-import { AssertionError } from "./Exceptions";
+import { AssertionError } from "./Exceptions.js";
 
 export function assertNever(_: never): never {
   throw new AssertionError("This point should never be reached.");
