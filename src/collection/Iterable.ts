@@ -4,16 +4,21 @@ import { IndexOutOfBoundsException } from "../Exceptions.js";
 import { Sequence } from "./Sequence.js";
 
 declare global {
+  // Check if performant enough
   /** @tsplus type Iterable */
+  export interface Object {}
+  /** @tsplus type Iterable */
+  export interface String {}
+
   export interface Iterable<T> {}
   /** @tsplus type Iterable */
   export interface IterableIterator<T> {}
-  /** @tsplus type Iterable */
-  export interface Map<K, V> {}
-  /** @tsplus type Iterable */
-  export interface Set<T> extends Iterable<T> {}
-  /** @tsplus type Iterable */
-  export interface Array<T> {}
+  //   /** @tsplus type Iterable */
+  //   export interface Map<K, V> {}
+  //   /** @tsplus type Iterable */
+  //   export interface Set<T> {}
+  //   /** @tsplus type Iterable */
+  //   export interface Array<T> {}
 }
 
 /**
@@ -107,11 +112,8 @@ export const asSequence = <T>(self: Iterable<T>): Sequence<T> => Sequence(() => 
  *
  * @tsplus fluent Iterable associate
  */
-export const associate = <T, K, V>(self: Iterable<T>, transform: (it: T) => [K, V]): Map<K, V> => {
-  const map = new Map<K, V>();
-  for (const it of self) map.set(...transform(it));
-  return map;
-};
+export const associate = <T, K, V>(self: Iterable<T>, transform: (it: T) => [K, V]): Map<K, V> =>
+  self.map(transform).toMap();
 
 /**
  * Returns a [Map] containing the elements from the given collection indexed by the key
@@ -202,10 +204,9 @@ export const associateTo = <T, K, V, M extends Map<K, V>>(
  *
  * @tsplus fluent Iterable associateWith
  */
-export const associateWith = <K, V>(self: Iterable<K>, valueSelector: (key: K) => V): Map<K, V> => {
-  const result = new Map<K, V>();
-  return self.associateWithTo(result, valueSelector);
-};
+export const associateWith = <K, V>(self: Iterable<K>, valueSelector: (key: K) => V): Map<K, V> =>
+  // TODO change to as const in next tsplus release
+  self.map((it) => [it, valueSelector(it)] as [K, V]).toMap();
 
 /**
  * Populates and returns the [destination] mutable map with key-value pairs for each element of the given collection,
@@ -256,6 +257,16 @@ export const map = Iterable(function* <T, R>(self: Iterable<T>, transform: (it: 
 export const toArray = <T>(self: Iterable<T>) => [...self];
 
 /**
+ * Returns a new map containing all key-value pairs from the given collection of pairs.
+ *
+ * The returned map preserves the entry iteration order of the original collection.
+ * If any of two pairs would have the same key the last one gets added to the map.
+ *
+ * @tsplus fluent Iterable toMap
+ */
+export const toMap = <K, V>(self: Iterable<readonly [K, V]>) => new Map(self);
+
+/**
  * Returns an iterator over the elements of this object.
  * @tsplus fluent Iterable iterator
  */
@@ -265,7 +276,6 @@ export const iterator = <T>(self: Iterable<T>) => self[Symbol.iterator]();
  * Returns `true` if [element] is found in the collection.
  *
  * @tsplus fluent Iterable contains
- * @tsplus fluent Array contains
  */
 export const contains = <T>(self: Iterable<T>, element: T): boolean => self.indexOf(element) !== -1;
 

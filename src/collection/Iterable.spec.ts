@@ -20,7 +20,7 @@ describe("Iterable", () => {
   });
 
   test("associate", () => {
-    const names = ["Grace Hopper", "Jacob Bernoulli", "Johann Bernoulli"];
+    const names = Iterable.of("Grace Hopper", "Jacob Bernoulli", "Johann Bernoulli");
     const byLastName = names.associate((it) => it.split(" ").let(([firstName, lastName]) => [lastName, firstName]));
 
     expect(byLastName.asString()).toBe("{Hopper=Grace, Bernoulli=Johann}");

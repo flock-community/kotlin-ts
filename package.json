@@ -1,6 +1,6 @@
 {
   "name": "@flock/kotlin-ts",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "author": "Kasper Peulen",
   "license": "MIT",
   "repository": "https://github.com/flock-community/kotlin-ts.git",
@@ -26,14 +26,15 @@
     "build:cjs": "tsc -b tsconfig.cjs.json",
     "build:esm": "tsc -b tsconfig.esm.json",
     "build:clean": "rimraf build",
-    "preinstall": "update-ruecksichtslos --caret",
+    "update": "update-ruecksichtslos --caret",
     "postinstall": "tsplus-install",
-    "test": "jest --all"
+    "test":  "jest --all",
+    "tsc": "tsc"
   },
   "devDependencies": {
-    "@tsplus/installer": "^0.0.41",
+    "@tsplus/installer": "^0.0.45",
     "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.21",
+    "@types/node": "^17.0.22",
     "jest": "^27.5.1",
     "prettier": "^2.6.0",
     "ts-jest": "^27.1.3",
