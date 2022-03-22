@@ -1,11 +1,12 @@
 {
   "name": "@flock/kotlin-ts",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "author": "Kasper Peulen",
   "license": "MIT",
   "repository": "https://github.com/flock-community/kotlin-ts.git",
   "main": "./index.js",
   "module": "./esm/index.js",
+  "type": "module",
   "sideEffects": [],
   "exports": {
     ".": {
@@ -22,11 +23,11 @@
   },
   "scripts": {
     "release": "npm t && npm run build && cd build && npm publish",
-    "build": "npm run build:clean && npm run build:esm && npm run build:cjs && cp package.json build/package.json && cp package.esm.json build/esm/package.json",
+    "build": "npm run build:clean && npm run build:esm && npm run build:cjs && ts-node --project=./tsconfig.esm.json --esm scripts/prepublish.ts ",
     "build:cjs": "tsc -b tsconfig.cjs.json",
     "build:esm": "tsc -b tsconfig.esm.json",
     "build:clean": "rimraf build",
-    "update": "update-ruecksichtslos --caret",
+    "preinstall": "update-ruecksichtslos --caret",
     "postinstall": "tsplus-install",
     "test":  "jest --all",
     "tsc": "tsc"
