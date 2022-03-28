@@ -4,7 +4,7 @@ The goal of this npm package is to port the rich standard library of Kotlin to T
 We try to keep as close the Kotlin api as possible with a couple of exceptions.
 
 For example, we won't rewrite and rename standard Typescript types such as Iterable, Array and Map to exactly match Kotlin.
-Instead, we will provide (extension) functions to make sure those standard types are as rich as an Iterable, List and LinkedHashMap are in Kotlin.
+Instead, we will provide (extension) functions to make sure those standard types are as rich as an Iterable, List and Map are in Kotlin.
 Below a list of all the things that diverge from the api of Kotlin's standard library.
 
 ### Installation
@@ -48,14 +48,14 @@ interface Iterable<T> {
 }
 ```
 
-A lot of types implement this interface, for example: Array, Generator, String, Set and Map.
-However, this type doesn't exist on runtime, there is no prototype called Iterable in JavasScript, we could add methods to.
+Types like Array, Generator, String, Set and Map implement this interface in TypeScript.
+However, this type doesn't exist on runtime, there is no prototype called Iterable in JavasScript we could add methods to.
 
 And even if we could, this would be a terrible idea, because prototype modifications are not scoped.
 If you change a prototype, you change this prototype to all your dependencies as well.
 If you and your dependency change the prototype in non-compatible ways, either you or your dependency will break.
 
-Some languages (Kotlin, Swift, C#, Dart) have feature called "extension function", that allows functions to be called with "dot" notation.
+Some languages (Kotlin, Swift, C#, Dart) have a feature called "extension functions", that allows functions to be called with "dot" notation.
 
 > Extensions do not actually modify the classes they extend.
 > By defining an extension, you are not inserting new members into a class, only making new functions callable with the dot-notation on variables of this type.
@@ -70,7 +70,7 @@ There is a fork of TypeScript called tsplus that adds extension functions to Typ
 
 ### Contribution guide
 
-We are start with "enriching" the following JavaScript types:
+We will start with "enriching" the following JavaScript types:
 
 - Iterable
 - Array
