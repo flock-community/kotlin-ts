@@ -1,4 +1,4 @@
-import { Iterable } from "./Iterable.js";
+import { Iterable } from "@flock/kotlin-ts/Iterable";
 
 declare global {
   /**

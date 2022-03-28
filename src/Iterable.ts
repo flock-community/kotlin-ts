@@ -1,7 +1,7 @@
 // From: https://github.com/JetBrains/kotlin/blob/master/libraries/stdlib/common/src/generated/_Collections.kt
-import { throws } from "../utils.js";
-import { IndexOutOfBoundsException } from "../Exceptions.js";
-import { Sequence } from "./Sequence.js";
+import { throws } from "@flock/kotlin-ts/utils";
+import { Sequence } from "@flock/kotlin-ts/Sequence";
+import { IndexOutOfBoundsException } from "@flock/kotlin-ts/Exceptions";
 
 declare global {
   // Check if performant enough
@@ -10,15 +10,16 @@ declare global {
   /** @tsplus type Iterable */
   export interface String {}
 
-  export interface Iterable<T> {}
-  /** @tsplus type Iterable */
-  export interface IterableIterator<T> {}
-  //   /** @tsplus type Iterable */
-  //   export interface Map<K, V> {}
-  //   /** @tsplus type Iterable */
-  //   export interface Set<T> {}
-  //   /** @tsplus type Iterable */
-  //   export interface Array<T> {}
+  // /** @tsplus type Iterable */
+  // export interface Iterable<T> {}
+  // /** @tsplus type Iterable */
+  // export interface IterableIterator<T> {}
+  // /** @tsplus type Iterable */
+  // export interface Map<K, V> {}
+  // /** @tsplus type Iterable */
+  // export interface Set<T> {}
+  // /** @tsplus type Iterable */
+  // export interface Array<T> {}
 }
 
 /**

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "module": "CommonJS",
     "outDir": "build",
-    "noEmit": false
+    "noEmit": false,
+    "incremental": false
   },
   "include": ["src/**/*.ts"]
 }

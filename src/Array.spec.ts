@@ -1,5 +1,3 @@
-import {} from "./Array";
-
 describe("Array", () => {
   const numbers = [1, 2, 3];
   test("sum", () => {
@@ -22,10 +20,10 @@ describe("Array", () => {
       { x: 1, y: 3 },
     ];
     expect(points.distinctBy(({ x, y }) => `${x},${y}`)).toMatchInlineSnapshot(`
-    [
-      { "x": 1, "y": 2 },
-      { "x": 1, "y": 3 }
-    ]
-  `);
+      [
+        { "x": 1, "y": 2 },
+        { "x": 1, "y": 3 }
+      ]
+    `);
   });
 });

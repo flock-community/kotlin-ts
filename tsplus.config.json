@@ -1,0 +1,6 @@
+{
+  "importMap": {
+    "^(.*)/src(.*)/index\\.ts$": "@flock/kotlin-ts$2",
+    "^(.*)/src(.*)\\.ts$": "@flock/kotlin-ts$2"
+  }
+}

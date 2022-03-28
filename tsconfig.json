@@ -15,7 +15,22 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
-    "noEmit": true
+    "noEmit": true,
+    "tsPlusConfig": "tsplus.config.json",
+    "paths": {
+      "@flock/kotlin-ts": [
+        "./src/index.ts"
+      ],
+      "@flock/kotlin-ts/*": [
+        "./src/*"
+      ],
+    }
   },
-  "include": ["src/**/*.ts", "scripts/**/*.ts"]
+  "ts-node": {
+    "files": true
+  },
+  "include": ["src/**/*.ts", "scripts/**/*.ts"],
+  "exclude": [
+    "**/*.spec.ts"
+  ]
 }

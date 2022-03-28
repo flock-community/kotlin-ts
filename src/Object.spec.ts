@@ -1,6 +1,3 @@
-import {} from "./Standard.js";
-import {} from "../collection/Array.js";
-
 describe("Object", () => {
   test("let", () => {
     const a = [1, 2];

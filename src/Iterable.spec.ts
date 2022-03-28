@@ -1,5 +1,4 @@
-import { Iterable, naturals } from "./Iterable.js";
-import {} from "../util/Standard.js";
+import { Iterable, naturals } from "@flock/kotlin-ts/Iterable";
 
 describe("Iterable", () => {
   const empty = new Set<string>();
