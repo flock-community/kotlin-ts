@@ -254,6 +254,7 @@ export const map = Iterable(function* <T, R>(self: Iterable<T>, transform: (it: 
 /**
  * Returns an iterator over the elements of this object.
  * @tsplus fluent Iterable toArray
+ * @tsplus fluent Sequence toArray
  */
 export const toArray = <T>(self: Iterable<T>) => [...self];
 

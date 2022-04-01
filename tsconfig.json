@@ -3,10 +3,10 @@
     "strict": true,
     "target": "ES2021",
     "module": "ESNext",
+    "lib": ["ES2021"],
     "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
-    "incremental": true,
     "skipLibCheck": true,
     "downlevelIteration": true,
     "allowUnusedLabels": false,
@@ -15,22 +15,16 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
-    "noEmit": true,
+    "noEmit": false,
     "tsPlusConfig": "tsplus.config.json",
     "paths": {
-      "@flock/kotlin-ts": [
-        "./src/index.ts"
-      ],
-      "@flock/kotlin-ts/*": [
-        "./src/*"
-      ],
+      "@flock/kotlin-ts": ["./src/index.ts"],
+      "@flock/kotlin-ts/*": ["./src/*"]
     }
   },
   "ts-node": {
     "files": true
   },
-  "include": ["src/**/*.ts", "scripts/**/*.ts"],
-  "exclude": [
-    "**/*.spec.ts"
-  ]
+  "files": ["prelude.d.ts"],
+  "include": ["src/**/*.ts", "scripts/**/*.ts"]
 }
