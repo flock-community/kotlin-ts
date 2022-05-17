@@ -86,3 +86,15 @@ export const takeUnless = <T>(self: T, predicate: (it: T) => boolean): T | undef
  */
 export const TODO = (reason?: string): never =>
   throws(new NotImplementedError(reason == null ? undefined : `"An operation is not implemented: ${reason}`));
+
+// /**
+//  * @tsplus fluent object to
+//  */
+// export const to = <T, S>(self: T, other: S): [T, S] => {
+//   return [self, other];
+// };
+
+/**
+ * @tsplus fluent object entries
+ */
+export const entries = <T>(self: { [s: string]: T }) => Object.entries(self);

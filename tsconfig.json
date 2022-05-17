@@ -15,7 +15,7 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
-    "noEmit": false,
+    "noEmit": true,
     "tsPlusConfig": "tsplus.config.json",
     "paths": {
       "@flock/kotlin-ts": ["./src/index.ts"],

@@ -9,8 +9,6 @@ Below a list of all the things that diverge from the api of Kotlin's standard li
 
 ### Installation
 
-The installation instructions of tsplus can be found at: https://github.com/ts-plus/installer
-
 Install using `npm`:
 
 > npm install --save @flock/kotlin-ts
@@ -21,21 +19,76 @@ Or `yarn`:
 yarn add @flock/kotlin-ts
 ```
 
+If you want to use @flock/kotlin-ts with ts-plus, you can find its installation instructions here: https://github.com/ts-plus/installer
+
 ### Example
+
+The first useful script made with kotlin-ts had as purpose to publish kotlin-ts itself to npm as a multi module package with both esm and commonjs support.
 
 ```ts
 fs.readFileSync("package.json", "utf-8")
   .let((it) => JSON.parse(it) as Record<string, unknown>)
   // otherwise preinstall/postinstall will be executed when including @flock/kotlin-ts in deps
   .omit("scripts")
+  // TODO remove when we publish esm as root
   .omit("type")
+  .let((it) => ({
+    ...it,
+    exports: {
+      ".": {
+        import: "./esm/index.js",
+        require: "./index.js",
+      },
+      "./*": {
+        import: "./esm/*.js",
+        require: "./*.js",
+      },
+    },
+  }))
   .let(JSON.stringify)
   .let((it) => format(it, { parser: "json" }))
   .also((it) => fs.writeFileSync("build/package.json", it, { flag: "w" }));
 
+// TODO change to type: commonjs when we publish esm as root
 JSON.stringify({ type: "module" })
   .let((it) => format(it, { parser: "json" }))
   .also((it) => fs.writeFileSync("build/esm/package.json", it, { flag: "w" }));
+```
+
+We adopted kotlin-ts in [flock-fit](https://github.com/flock-community/flock-fit) and we found it immediately useful with complex data transformations:
+
+```ts
+const dataPoints = fitData
+  .flatMap((it) =>
+    it.fitDataEntries.map((entry) => ({ time: entry.dateTime, [it.fitAccountId]: entry.stepsSinceMidnight }))
+  )
+  // groupBy can be chained as it an extension function on Iterable (and Array is an Iterable)
+  .groupBy((it) => it.dateTime)
+  // groupBy returns a Map, which has very little useful methods itself
+  // but now it can be directly mapped, as map is an extension function on Iterable (and Map is an Iterable)
+  .map(([, it]) => Object.fromEntries(it.flatMap(Object.entries)));
+```
+
+More about how to use extension functions with ts-plus below.
+You can also use @flock/kotlin-ts without extension functions but as regular functions:
+
+```ts
+const flatMapped = fitData.flatMap((it) =>
+  it.fitDataEntries.map((entry) => ({ time: entry.dateTime, [it.fitAccountId]: entry.stepsSinceMidnight }))
+);
+const grouped = groupBy(chartDataPoints, (it) => it.dateTime);
+const dataPoints = map(grouped, ([, it]) => Object.fromEntries(it.flatMap(Object.entries)));
+```
+
+With the upcoming [pipe operator](https://github.com/tc39/proposal-pipeline-operator), you could use it even without the intermediate variables:
+
+```ts
+const dataPoints = fitData
+  .flatMap((it) =>
+    it.fitDataEntries.map((entry) => ({ time: entry.dateTime, [it.fitAccountId]: entry.stepsSinceMidnight }))
+  )
+  |> groupBy(%, (it) => it.dateTime)
+  |> map((%, ([, it]) => Object.fromEntries(it.flatMap(Object.entries)))
 ```
 
 ### Extension functions
@@ -80,16 +133,18 @@ We will start with "enriching" the following JavaScript types:
 - string
 - "unknown"/generic types (such as let, also)
 
-Those extension functions can be found in the following files: 
+Those extension functions can be found in the following files:
 
-* https://github.com/JetBrains/kotlin/tree/master/libraries/stdlib/common/src/generated
-* https://github.com/JetBrains/kotlin/tree/master/libraries/stdlib/src/kotlin/util
+- https://github.com/JetBrains/kotlin/tree/master/libraries/stdlib/common/src/generated
+- https://github.com/JetBrains/kotlin/tree/master/libraries/stdlib/src/kotlin/util
 
 We also port the tests, if they exist, they can be found here:
-* https://github.com/JetBrains/kotlin/tree/master/libraries/stdlib/test
+
+- https://github.com/JetBrains/kotlin/tree/master/libraries/stdlib/test
 
 Sometimes there doesn't exist a test, but there is a "sample" test:
-* https://github.com/JetBrains/kotlin/tree/master/libraries/stdlib/samples/test/samples
+
+- https://github.com/JetBrains/kotlin/tree/master/libraries/stdlib/samples/test/samples
 
 ### Changes from Kotlin
 
@@ -99,3 +154,7 @@ Sometimes there doesn't exist a test, but there is a "sample" test:
 - MutableMap => Map
 - Set => ReadonlySet
 - MutableSet => Set
+
+#### Iterable
+
+- filterIsInstance can not be implemented, but a filter with a predicate will do

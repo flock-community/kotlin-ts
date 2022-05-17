@@ -24,6 +24,6 @@ export const rangeTo = Iterable(function* (self: number, other: number) {
  *
  * @tsplus fluent number until
  */
-export const until = Iterable(function* (self: number, other: number) {
-  for (let i = self; i < other; i++) yield i;
+export const until = Iterable(function* (self: number, to: number) {
+  for (let i = self; i < to; i++) yield i;
 });

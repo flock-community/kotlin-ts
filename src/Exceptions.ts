@@ -1,3 +1,11 @@
+export class UnsupportedOperationException extends Error {
+  override readonly name = "UnsupportedOperationException";
+}
+
+export class IllegalArgumentException extends Error {
+  override readonly name = "IllegalArgumentException";
+}
+
 export class NoSuchElementException extends Error {
   override readonly name = "NoSuchElementException";
 }
@@ -6,8 +14,8 @@ export class IndexOutOfBoundsException extends Error {
   override readonly name = "IndexOutOfBoundsException";
 }
 
-export class AssertionError extends Error {
-  override readonly name = "AssertionError";
+export class AssertionException extends Error {
+  override readonly name = "AssertionException";
 }
 
 /**
